@@ -1,0 +1,18 @@
+<% provide(:webpageTitle, "User Sign In") %>
+<h2>Sign In</h2>
+
+<div>
+  <%= form_for(:session, :url=>sessions_path) do |f| %>
+    <%= f.label :username %>
+    <%= f.text_field :username %><br />
+    
+    <%= f.label :password %>
+    <%= f.password_field :password %><br />
+    
+    <%= f.submit "Sign In" %><br />
+  <% end %>
+</div>
+
+<div>
+  <%= link_to "Sign Up (Only for Pig Rider Developer)", new_user_path %>
+</div>

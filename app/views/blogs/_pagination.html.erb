@@ -1,0 +1,84 @@
+<% if bLoadCSS %>
+  <style>
+    .PreviousTag {
+      display:inline-block;
+      margin:0 10px 0 0;
+    }
+    
+    .NextTag {
+      display:inline-block;
+      margin:0 0 0 10px;
+    }
+    
+    .PageTag {
+      display:inline-block;
+      margin:0 3px 0 3px;
+    }
+  </style>
+<% end %>
+
+
+<div>
+  <% iPage=1 %>
+  <% if params.has_key?(:currentPage) %>
+    <% iPage=params[:currentPage].to_i %>
+  <% end %>
+  
+  <% if iPage==1 %>
+    <span class="PreviousTag">Previous</span>
+  <% else %>
+    <%= link_to "Previous", paginateURL(:currentPage=>iPage-1), :class=>"PreviousTag", :style=>"text-decoration:underline" %>
+  <% end %>
+   
+  <% nRightHalf=(nNumberOfPageTags-1)/2 %>
+  <% nLeftHalf=nNumberOfPageTags-1-nRightHalf %>
+  
+  <% if nTotalPages==0 || nTotalPages.nil? %>
+    <% nTotalPages=1 %>
+  <% end %>
+  
+  <% if nTotalPages<nNumberOfPageTags %>
+    <% iStartPage=1 %>
+    <% iEndPage=nTotalPages %>
+  <% elsif iPage>nLeftHalf && iPage+nRightHalf<=nTotalPages %>
+    <% iStartPage=iPage-nLeftHalf %>
+    <% iEndPage=iPage+nRightHalf %>
+  <% elsif iPage<=nLeftHalf && iPage+nRightHalf<=nTotalPages %>
+    <% iStartPage=1 %>
+    <% iEndPage=nNumberOfPageTags %>
+  <% elsif iPage>nLeftHalf && iPage+nRightHalf>nTotalPages %>
+    <% iStartPage=nTotalPages-nNumberOfPageTags+1 %>
+    <% iEndPage=nTotalPages %>
+  <% end %>
+  
+  <% if iStartPage>1 %>
+    <%= link_to "1", paginateURL(:currentPage=>1), :class=>"PageTag" %>
+    <% if iStartPage>2 %>
+      <span class="PageTag"> ... </span>
+    <% end %>
+  <% end %> 
+  
+  <% for iP in iStartPage..iPage-1 %>
+    <%= link_to iP.to_s, paginateURL(:currentPage=>iP), :class=>"PageTag" %>
+  <% end %>
+  
+  <%= link_to iPage.to_s, paginateURL(:currentPage=>iPage), :class=>"PageTag", :style=>"color:red; font-weight:bold" %>
+  
+  <% for iP in iPage+1..iEndPage %>
+    <%= link_to iP.to_s, paginateURL(:currentPage=>iP), :class=>"PageTag" %>
+  <% end %>
+  
+  <% if iEndPage<nTotalPages %>
+    <% if iEndPage<nTotalPages-1 %>
+      <span class="PageTag"> ... </span>
+    <% end %>
+    <%= link_to nTotalPages.to_s, paginateURL(:currentPage=>nTotalPages), :class=>"PageTag" %>
+  <% end %>
+  
+  <% if iPage==nTotalPages %>
+    <span class="NextTag">Next</span>
+  <% else %>
+    <%= link_to "Next", paginateURL(:currentPage=>iPage+1), :class=>"NextTag", :style=>"text-decoration:underline" %>
+  <% end %>
+</div>
+

@@ -1,0 +1,54 @@
+<div class="EditBlogTitle">
+  <h3>Blog Title:</h3>
+  <%= form.text_field :title, :class=>"BlogTitleEditArea" %><br />
+</div>
+
+
+<div class="SelectBlogCategory">
+<h3>Choose blog categories:</h3>
+  <span class="CategoryCheckBox">HTML: <%= form.check_box :html, {:checked=>bHTML} %></span>
+  <span class="CategoryCheckBox">CSS: <%= form.check_box :css, {:checked=>bCSS} %></span>
+  <span class="CategoryCheckBox">Javascript: <%= form.check_box :javascript, {:checked=>bJavascript} %></span>
+  <span class="CategoryCheckBox">Ruby on Rails <%= form.check_box :ror, {:checked=>bRoR} %></span>
+  <span class="CategoryCheckBox">Python <%= form.check_box :python, {:checked=>bPython} %></span>
+  <span class="CategoryCheckBox">Java <%= form.check_box :java, {:checked=>bJava} %></span>
+  <span class="CategoryCheckBox">C++ <%= form.check_box :cpp, {:checked=>bCpp} %></span>
+  <span class="CategoryCheckBox">SQL <%= form.check_box :sql, {:checked=>bSql} %></span>
+  <span class="CategoryCheckBox">Git <%= form.check_box :git, {:checked=>bGit} %></span>
+  <span class="CategoryCheckBox">Linux <%= form.check_box :linux, {:checked=>bLinux} %></span>
+  <span class="CategoryCheckBox">Others <%= form.check_box :others, {:checked=>bOthers} %></span>
+</div>
+
+
+<div class="BlogContentContainer">
+  <div class="BCHeader">
+    <div class="BCLabel FloatLeft"><h3>Edit Content:</h3></div>
+    
+    <div class="BCAddCode FloatLeft">
+      <select id="selectPrettyCodeType">
+        <option selected="selected">Normal</option>
+        <option>HTML</option>
+        <option>CSS</option>
+        <option>Javascript</option>
+        <option>Ruby on Rails</option>  
+        <option>Python</option>
+        <option>Java</option>
+        <option>C++</option>
+        <option>SQL</option>
+      </select>
+      <button id="buttonAddPrettyCode" type="button">Add</button><br />
+    </div>
+  </div>
+
+  <div>
+    <%= form.text_area :content, :class=>"BCEditArea" %><br />
+  </div>
+</div>
+
+
+<% provide :webpageTailJavascript do %>
+  <%= javascript_include_tag "common/ajaxHelper" %>
+  <%= javascript_include_tag "common/textarea_operation_class" %>
+  <%= javascript_include_tag "blogs/blogEditor/add_pretty_code" %>
+  <%= javascript_include_tag "blogs/blogEditor/event_listener" %>
+<% end %>

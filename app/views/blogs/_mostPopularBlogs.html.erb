@@ -1,0 +1,48 @@
+<% $nNumberOfMostPopularBlogs=10 %>
+
+
+<% if onThisPage=="All" %>
+  <% dbPopularBlog=Blog.find(:all,:select=>"blogs.id,blogs.title",:order=>"views desc",:limit=>$nNumberOfMostPopularBlogs) %>
+<% else %>
+  <% bCategory=true %>
+  
+  <% case onThisPage %>
+  <% when $sTagHTML %>
+    <% sIndexTableName="html_indices" %>
+  <% when $sTagCSS %>
+    <% sIndexTableName="css_indices" %>
+  <% when $sTagJavascript %>
+    <% sIndexTableName="javascript_indices" %>
+  <% when $sTagRoR %>
+    <% sIndexTableName="ror_indices" %>
+  <% when $sTagPython %>
+    <% sIndexTableName="python_indices" %>
+  <% when $sTagJava %>
+    <% sIndexTableName="java_indices" %>
+  <% when $sTagCpp %>
+    <% sIndexTableName="cpp_indices" %>
+  <% when $sTagSql %>
+    <% sIndexTableName="sql_indices" %>
+  <% when $sTagGit %>
+    <% sIndexTableName="git_indices" %>
+  <% when $sTagLinux %>
+    <% sIndexTableName="linux_indices" %>
+
+  <% when $sTagOthers %>
+    <% sIndexTableName="others_indices" %>  
+  <% else %>
+    <% bCategory=false %>
+    <% dbPopularBlog=Blog.find(:all,:select=>"blogs.id,blogs.title",:conditions=>{:author=>onThisPage},:order=>"views desc",:limit=>$nNumberOfMostPopularBlogs) %>
+  <% end %>
+  
+  <% if bCategory %>
+    <% dbPopularBlog=Blog.find(:all,:select=>"blogs.id,blogs.title",:joins=>"INNER JOIN #{sIndexTableName} it ON it.blogID=blogs.id",:order=>"views desc",:limit=>$nNumberOfMostPopularBlogs) %>
+  <% end %>
+<% end %>
+
+<ul type="disc" class="PopularBlogs">
+<% dbPopularBlog.each do |b| %>
+  <li><%= link_to b.title, b, :title=>b.title %></li>
+<% end %>
+</ul>
+

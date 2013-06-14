@@ -1,0 +1,32 @@
+<% provide :webpageTitle, "All" %>
+
+<% provide :webpageCSS do %>
+  <%= stylesheet_link_tag "blogsCommon", :media=>"all" %>
+<% end %>
+
+<% provide :webpageMetaTag do %>
+  <meta name="keywords" content="pigRider blogs" />
+  <meta name="description" content="all pigRider blogs" />
+<% end %>
+
+
+<% sTagForThisPage="All" %>
+<%= render :partial=>'categoryTags', :locals=>{:onThisPage=>sTagForThisPage} %>
+
+<div class="FloatLeft ContainerForBlogAbstracts">
+  <%= render :partial=>'pagination', :locals=>{:nNumberOfPageTags=>$nNumberOfPageTags,:nTotalPages=>$nTotalPages,:bLoadCSS=>true} %>
+  <div class="CFBAInnerContainer"><%= render 'blogAbstracts' %></div>
+  <%= render :partial=>'pagination', :locals=>{:nNumberOfPageTags=>$nNumberOfPageTags,:nTotalPages=>$nTotalPages,:bLoadCSS=>false} %>
+</div>
+
+<div class="FloatRight ContainerForMostPopularBlogs">
+  <h4>Recent Most Popular Blogs:</h4>
+  <div>
+    <%= render :partial=>'mostPopularBlogs', :locals=>{:onThisPage=>sTagForThisPage} %>
+  </div>
+</div>
+
+<div></div>
+
+
+

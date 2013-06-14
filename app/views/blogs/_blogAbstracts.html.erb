@@ -1,0 +1,24 @@
+<% nUserTimeZoneOffset=cookies[:userTimeZone].to_i %>
+<% @dbBlogs.each do |b| %>
+  <div class="BlogGlance">
+    <h2 class="BlogTitle"><%= link_to b.title, b, :title=>b.title %></h2>
+    
+    <p class="BlogDateAuthor">[Author: <%= link_to b.author, blogsByAuthor_path(:byAuthor=>b.author) %>] &#160; [<%= b.updated_at.in_time_zone(nUserTimeZoneOffset).strftime("%a, %Y-%m-%d, %H:%M") %>] &#160; [<%= b.views %> views]</p>
+    
+    <p>      
+      <% hsiCategory=parseCategoryAndID(b.category) %>
+      <% hsiCategory.each do |hK,hV| %>
+        <%= link_to hK, blogsCategory_path(:type=>hK), {:class=>"BlogCategory"} %>
+      <% end %>
+    </p>
+    
+    <p class="BlogAbstract"><%= raw(strip_tags(b.abstract)) %> ... <i><%= link_to "see full article", b, :class=>"SeeFullArticleTag" %></i></p>
+    
+    <% if userSignedIn(b.author) %>
+      <p class="BlogManage">
+        <%= link_to "Edit", edit_blog_path(b) %>
+        <%= link_to "Delete", b, :method=>:delete, data:{confirm: 'Are you sure?'} %>
+      </p>
+    <% end %>
+  </div>
+<% end %>

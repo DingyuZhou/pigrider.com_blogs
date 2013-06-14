@@ -1,0 +1,52 @@
+<% provide :webpageCSS do %>
+  <%= stylesheet_link_tag "userSingUp", :media=>"all" %>
+<% end %>
+
+<% provide(:webpageTitle, "Sign Up") %>
+
+
+<h2>Sign up</h2>
+
+<h3>This is a PigRider internal blog. So the sign up is only open for PigRider developers.</h3>
+
+<div>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-error">
+        The form contains <%= pluralize(@user.errors.count, "error") %>.
+      </div>
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li>* <%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
+
+<div class="SignUpFormContainer">
+  <%= form_for(@user) do |f| %>
+    <%= f.label :username, :class=>"Label" %>
+    <%= f.text_field :username, :class=>"Textfield" %><br />
+    
+    <%= f.label :email, :class=>"Label" %>
+    <%= f.text_field :email, :class=>"Textfield" %><br />
+    
+    <%= f.label :password, :class=>"Label" %>
+    <%= f.password_field :password, :class=>"PasswordField"  %><br />
+    
+    <%= f.label :password_confirmation, "Confirmation", :class=>"Label" %>
+    <%= f.password_field :password_confirmation, :class=>"PasswordField"  %><br />
+
+    <br />
+    <br />
+    <br />
+
+    <p style="color:red">Please answer below two questions for registry:</p>
+    <%= f.label :questionOne, "What's the most popular nickname for our cofounder Ming?", :class=>"Label" %>
+    <%= f.text_field :questionOne, :class=>"Textfield" %><br />
+    <%= f.label :questionTwo, "What's the invitation code for PigRider employees to register in this blog?", :class=>"Label" %>
+    <%= f.text_field :questionTwo, :class=>"Textfield" %><br /><br />
+    <%= f.submit "Create my account" %><br />
+  <% end %>
+</div>

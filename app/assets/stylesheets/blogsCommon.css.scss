@@ -1,0 +1,111 @@
+@import "common";
+
+
+.CategoryTag {
+  background-color:#E0EAF1;
+  padding:3px 7px 3px 7px;
+  margin:2px 2px 2px 0;
+  border-bottom:1px solid #b3cee1;
+  border-right:1px solid #b3cee1;
+  -moz-border-radius:9px;
+  -webkit-border-radius:9px;
+  border-radius:9px;
+  text-decoration:none;
+  line-height:2.5;
+  white-space:nowrap;
+}
+
+
+.OnThisCategoryTag {
+  @extend .CategoryTag;
+  background-color:#ffdfb8;
+}
+
+
+.ContainerForBlogAbstracts {
+  width:65%;
+  margin:20px 0;
+}
+
+
+.CFBAInnerContainer {
+  min-height:400px;
+}
+
+
+.ContainerForMostPopularBlogs {
+  width:25%;
+  border:2px solid;
+  border-color:gray;
+  -moz-border-radius:9px;
+  -webkit-border-radius:9px;
+  border-radius:9px;
+  padding:15px;
+  margin:30px 20px 0 0;
+  a {
+    @include LinkStyle(#0000ff,#ff0000,#cc0099);
+  }
+}
+
+
+.BlogGlance {
+  margin:20px 20px 30px 20px;
+  padding:0 0 8px 0;
+  border-bottom:1px solid #b3cee1;  
+}
+
+
+.BlogTitle {
+  font-weight:bold;
+  font-size:22px;
+  margin:0 0 5px 0;
+  overflow:hidden;
+  white-space:nowrap; 
+  text-overflow:ellipsis;
+  a {
+    @include LinkStyleNoUnderline(black,#737373,black);
+  }
+}
+
+
+.BlogDateAuthor {
+  font-size:12px;
+  font-style:italic;
+}
+
+
+.BlogCategory {
+  background-color:#dedede;
+  padding:1px 6px;
+  margin:2px 2px 2px 0;
+  -moz-border-radius:25px;
+  -webkit-border-radius:25px;
+  border-radius:25px;
+  text-decoration:none;
+  font-size:12px;
+  line-height:2.5;
+  white-space:nowrap;
+}
+
+
+.BlogAbstract {
+  // background-color:#ffecd4;
+}
+
+
+a.SeeFullArticleTag {
+  @include LinkStyle(#0000ff,#ff0000,#cc0099);
+}
+
+
+ul.PopularBlogs {
+  padding:5px 15px 0 5px;
+  li {
+    padding:5px;
+    list-style-type:disc;
+    list-style-position:inside;
+    overflow:hidden;
+    white-space:nowrap; 
+    text-overflow:ellipsis;
+  }
+}

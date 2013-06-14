@@ -1,0 +1,23 @@
+<% provide :webpageTitle, "By "+params[:byAuthor] %>
+
+<% provide :webpageCSS do %>
+  <%= stylesheet_link_tag "blogsCommon", :media=>"all" %>
+<% end %>
+
+
+<%= render :partial=>'categoryTags', :locals=>{:onThisPage=>"By Author: "+params[:byAuthor]} %>
+
+<div class="FloatLeft ContainerForBlogAbstracts">
+  <%= render :partial=>'pagination', :locals=>{:nNumberOfPageTags=>$nNumberOfPageTags,:nTotalPages=>$nTotalPages,:bLoadCSS=>true} %>
+  <div class="CFBAInnerContainer"><%= render 'blogAbstracts' %></div>
+  <%= render :partial=>'pagination', :locals=>{:nNumberOfPageTags=>$nNumberOfPageTags,:nTotalPages=>$nTotalPages,:bLoadCSS=>false} %>
+</div>
+
+<div class="FloatRight ContainerForMostPopularBlogs">
+  <h4>Most Popular By This Author:</h4>
+  <div>
+    <%= render :partial=>'mostPopularBlogs', :locals=>{:onThisPage=>params[:byAuthor]} %>
+  </div>
+</div>
+
+<div></div>

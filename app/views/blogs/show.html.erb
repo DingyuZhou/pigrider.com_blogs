@@ -1,0 +1,43 @@
+<% provide :webpageTitle, @dbShowBlog.title %>
+
+<% provide :webpageHeadJavascript do %>
+  <%= javascript_include_tag "shjs/sh_main" %>
+<% end %>
+<% provide :bodyOnLoadCode, raw(" onload=\"sh_highlightDocument('/assets/shjs/', '.js');\"") %>
+
+<% provide :webpageCSS do %>
+  <%= stylesheet_link_tag "blogsCommon", :media=>"all" %>
+  <%= stylesheet_link_tag "showBlog", :media=>"all" %>
+  <%= stylesheet_link_tag "shjs/sh_style", :media=>"all" %>
+<% end %>
+
+<% provide :webpageMetaTag do %>
+  <meta name="keywords" content="<%= @dbShowBlog.title %>" />
+  <meta name="description" content="<%= @dbShowBlog.title %>" />
+<% end %>
+
+
+<%= render :partial=>'categoryTags', :locals=>{:onThisPage=>"ShowBlog"} %>
+
+
+<div class="ShowBlog">
+    <h2 class="BlogTitle"><%= @dbShowBlog.title %></h2>
+    
+    <p class="BlogDateAuthor FloatLeft">[Author: <%= link_to @dbShowBlog.author, blogsByAuthor_path(:byAuthor=>@dbShowBlog.author) %>] &#160; [<%= @dbShowBlog.updated_at.in_time_zone(cookies[:userTimeZone].to_i).strftime("%a, %Y-%m-%d, %H:%M") %>] &#160; [<%= @dbShowBlog.views %> views]</p>
+    <% if userSignedIn(@dbShowBlog.author) %>
+      <p class="BlogManage FloatRight">
+        <%= link_to "Edit", edit_blog_path(@dbShowBlog) %>
+        <%= link_to "Delete", @dbShowBlog, :method=>:delete, data:{confirm: 'Are you sure?'} %>
+      </p>
+    <% end %>
+    
+    <p>      
+      <% hsiCategory=parseCategoryAndID(@dbShowBlog.category) %>
+      <% hsiCategory.each do |hK,hV| %>
+        <%= link_to hK, blogsCategory_path(:type=>hK), {:class=>"BlogCategory"} %>
+      <% end %>
+    </p>
+    
+    <pre class="BlogContent"><%= raw @dbShowBlog.content %></pre>    
+</div>
+

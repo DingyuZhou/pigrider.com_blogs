@@ -1,0 +1,11 @@
+<% provide :webpageTitle, "Write A New Blog" %>
+
+<% provide :webpageCSS do %>
+  <%= stylesheet_link_tag "editBlog", :media=>"all" %>
+<% end %>
+
+
+<%= form_for @dbNewBlog do |f| %>
+  <%= render :partial=>'blogEditor',:locals=>{:form=>f,:bHTML=>false,:bCSS=>false,:bJavascript=>false,:bRoR=>false,:bPython=>false,:bJava=>false,:bCpp=>false,:bSql=>false,:bGit=>false,:bLinux=>false,:bOthers=>false} %>
+  <%= f.submit :onclick => "return confirm('Make sure you choose at least one category for this blog.')" %>
+<% end %>
