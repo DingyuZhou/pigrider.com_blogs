@@ -21,9 +21,9 @@
 
 
 <div class="ShowBlog">
-    <h2 class="BlogTitle"><%= @dbShowBlog.title %></h2>
+    <h2 class="BlogTitleComplete"><%= @dbShowBlog.title %></h2>
     
-    <p class="BlogDateAuthor FloatLeft">[Author: <%= link_to @dbShowBlog.author, blogsByAuthor_path(:byAuthor=>@dbShowBlog.author) %>] &#160; [<%= @dbShowBlog.updated_at.in_time_zone(cookies[:userTimeZone].to_i).strftime("%a, %Y-%m-%d, %H:%M") %>] &#160; [<%= @dbShowBlog.views %> views]</p>
+    <p class="BlogDateAuthor">[Author: <%= link_to @dbShowBlog.author, blogsByAuthor_path(:byAuthor=>@dbShowBlog.author) %>] &#160; [<%= @dbShowBlog.updated_at.in_time_zone(cookies[:userTimeZone].to_i).strftime("%a, %Y-%m-%d, %H:%M") %>] &#160; [<%= @dbShowBlog.views %> views]</p>
     <% if userSignedIn(@dbShowBlog.author) %>
       <p class="BlogManage FloatRight">
         <%= link_to "Edit", edit_blog_path(@dbShowBlog) %>
@@ -38,6 +38,6 @@
       <% end %>
     </p>
     
-    <pre class="BlogContent"><%= raw @dbShowBlog.content %></pre>    
+    <pre class="BlogContent"><%= raw @dbShowBlog.content %></pre>
 </div>
 

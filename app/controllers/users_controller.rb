@@ -1,6 +1,20 @@
 class UsersController < ApplicationController
   include SessionsHelper
   include BCrypt
+
+
+  before_filter :notSignedIn, :only=>[:edit,:update,:editEmail,:updateEmail,:changePassword,:updatePassword,:show,:destroy]
+  
+
+private
+  def notSignedIn
+    if !userSignedIn
+      redirect_to userSignIn_path
+    end
+  end
+
+
+public
   def index
   end
 

@@ -18,7 +18,7 @@ class BlogsController < ApplicationController
   $nNumberOfPageTags=9
   
   
-  before_filter :notSignedIn, :only=>[:new,:create,:edit,:update]
+  before_filter :notSignedIn, :only=>[:new,:create,:edit,:update,:destroy]
   
 
 private

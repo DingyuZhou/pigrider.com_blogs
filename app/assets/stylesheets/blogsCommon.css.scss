@@ -55,7 +55,17 @@
 }
 
 
-.BlogTitle {
+.BlogTitleComplete {
+  font-weight:bold;
+  font-size:22px;
+  margin:0 0 15px 0;
+  a {
+    @include LinkStyleNoUnderline(black,#737373,black);
+  }
+}
+
+
+.BlogTitleAbstract {
   font-weight:bold;
   font-size:22px;
   margin:0 0 5px 0;

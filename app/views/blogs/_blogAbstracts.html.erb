@@ -1,7 +1,7 @@
 <% nUserTimeZoneOffset=cookies[:userTimeZone].to_i %>
 <% @dbBlogs.each do |b| %>
   <div class="BlogGlance">
-    <h2 class="BlogTitle"><%= link_to b.title, b, :title=>b.title %></h2>
+    <h2 class="BlogTitleAbstract"><%= link_to b.title, b, :title=>b.title %></h2>
     
     <p class="BlogDateAuthor">[Author: <%= link_to b.author, blogsByAuthor_path(:byAuthor=>b.author) %>] &#160; [<%= b.updated_at.in_time_zone(nUserTimeZoneOffset).strftime("%a, %Y-%m-%d, %H:%M") %>] &#160; [<%= b.views %> views]</p>
     

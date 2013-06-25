@@ -1,11 +1,12 @@
 module SessionsHelper
-  def memorizeUser(username,id)
-    session[:rememberedUsername]=username
-    session[:rememberedUserid]=id
+  def memorizeUser(sUsername,iUserid)
+    session[:rememberedUsername]=sUsername
+    session[:rememberedUserid]=iUserid
   end
   
   def signOutUser
     session.delete(:rememberedUsername)
+    session.delete(:rememberedUserid)
   end
   
   def userSignedIn(username=nil)
