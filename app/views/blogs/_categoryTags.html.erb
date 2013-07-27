@@ -1,60 +1,30 @@
-<% sTagHtmlClass="CategoryTag" %>
-<% sTagCssClass="CategoryTag" %>
-<% sTagJavascriptClass="CategoryTag" %>
-<% sTagRorClass="CategoryTag" %>
-<% sTagPythonClass="CategoryTag" %>
-<% sTagJavaClass="CategoryTag" %>
-<% sTagCppClass="CategoryTag" %>
-<% sTagGitClass="CategoryTag" %>
-<% sTagLinuxClass="CategoryTag" %>
-<% sTagSqlClass="CategoryTag" %>
-<% sTagOthersClass="CategoryTag "%>
 <% sTagAllClass="CategoryTag" %>
 <% bByAuthor=false %>
-
-<% case onThisPage %>
-<% when $sTagHTML %>
-  <% sTagHtmlClass="OnThisCategoryTag" %>
-<% when $sTagCSS %>
-  <% sTagCssClass="OnThisCategoryTag" %>
-<% when $sTagJavascript %>
-  <% sTagJavascriptClass="OnThisCategoryTag" %>
-<% when $sTagRoR %>
-  <% sTagRorClass="OnThisCategoryTag" %>
-<% when $sTagPython %>
-  <% sTagPythonClass="OnThisCategoryTag" %>
-<% when $sTagJava %>
-  <% sTagJavaClass="OnThisCategoryTag" %>
-<% when $sTagCpp %>
-  <% sTagCppClass="OnThisCategoryTag" %>
-<% when $sTagGit %>
-  <% sTagGitClass="OnThisCategoryTag" %>
-<% when $sTagLinux %>
-  <% sTagLinuxClass="OnThisCategoryTag" %>
-<% when $sTagSql %>
-  <% sTagSqlClass="OnThisCategoryTag" %>
-<% when $sTagOthers %>
-  <% sTagOthersClass="OnThisCategoryTag" %>
-<% when "All" %>
-  <% sTagAllClass="OnThisCategoryTag" %>
-<% when "ShowBlog" %>
-  <!-- Do Nothing. -->
-<% else %>
-  <% bByAuthor=true %>
+<% iCategory=$hsiCategoryNameToArrayIndex[onThisPage] %>
+  
+<% if iCategory.nil? && onThisPage!="ShowBlog" %>
+  <% if onThisPage=="All" %>
+    <% sTagAllClass="OnThisCategoryTag" %>
+  <% else %>
+    <% bByAuthor=true %>
+  <% end %>
 <% end %>  
 
 <div>
-  <%= link_to $sTagHTML, blogsCategory_path(:type=>$sTagHTML), {:class=>sTagHtmlClass} %>
-  <%= link_to $sTagCSS, blogsCategory_path(:type=>$sTagCSS), {:class=>sTagCssClass} %>
-  <%= link_to $sTagJavascript, blogsCategory_path(:type=>$sTagJavascript), {:class=>sTagJavascriptClass} %>
-  <%= link_to $sTagRoR, blogsCategory_path(:type=>$sTagRoR), {:class=>sTagRorClass} %>
-  <%= link_to $sTagPython, blogsCategory_path(:type=>$sTagPython), {:class=>sTagPythonClass} %>
-  <%= link_to $sTagJava, blogsCategory_path(:type=>$sTagJava), {:class=>sTagJavaClass} %>
-  <%= link_to $sTagCpp, blogsCategory_path(:type=>$sTagCpp), {:class=>sTagCppClass} %>
-  <%= link_to $sTagSql, blogsCategory_path(:type=>$sTagSql), {:class=>sTagSqlClass} %>
-  <%= link_to $sTagGit, blogsCategory_path(:type=>$sTagGit), {:class=>sTagGitClass} %>
-  <%= link_to $sTagLinux, blogsCategory_path(:type=>$sTagLinux), {:class=>sTagLinuxClass} %>
-  <%= link_to $sTagOthers, blogsCategory_path(:type=>$sTagOthers), {:class=>sTagOthersClass} %>
+  <% if iCategory.nil? %>
+    <% $aoBlogCategories.each do |oBC| %>
+      <%= link_to oBC.sCategoryName, blogsCategory_path(:type=>oBC.sCategoryName), {:class=>"CategoryTag"} %>
+    <% end %>
+  <% else %>
+    <% for ii in 0..iCategory-1 %>
+      <%= link_to $aoBlogCategories[ii].sCategoryName, blogsCategory_path(:type=>$aoBlogCategories[ii].sCategoryName), {:class=>"CategoryTag"} %>
+    <% end %>
+    <%= link_to $aoBlogCategories[iCategory].sCategoryName, blogsCategory_path(:type=>$aoBlogCategories[iCategory].sCategoryName), {:class=>"OnThisCategoryTag"} %>
+    <% for ii in iCategory+1..$aoBlogCategories.length-1 %>
+      <%= link_to $aoBlogCategories[ii].sCategoryName, blogsCategory_path(:type=>$aoBlogCategories[ii].sCategoryName), {:class=>"CategoryTag"} %>
+    <% end %>
+  <% end %>
+
   <%= link_to "All", blogs_path, {:class=>sTagAllClass} %>
   <% if bByAuthor %>
     <%= link_to onThisPage, blogsByAuthor_path(:byAuthor=>onThisPage[11..-1]), {:class=>"OnThisCategoryTag"}%>

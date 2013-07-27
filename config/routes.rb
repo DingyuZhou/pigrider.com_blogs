@@ -6,6 +6,7 @@ PigRiderBlog::Application.routes.draw do
   
   # blogs
   resources :blogs
+  post "/updateBlog/:id"=>"blogs#update", :as=>:updateBlog
   match "/blogsCategory"=>"blogs#category", :as=>:blogsCategory
   match "/blogsByAuthor"=>"blogs#byAuthor", :as=>:blogsByAuthor
   

@@ -1,42 +1,18 @@
-<% provide :webpageTitle, "Write A New Blog" %>
-
+<% provide :webpageTitle, "Edit the Blog" %>
 
 <% provide :webpageCSS do %>
   <%= stylesheet_link_tag "editBlog", :media=>"all" %>
 <% end %>
 
 
-<%= form_for @dbToEdit do |f| %>
-  <% hsiCategory=parseCategoryAndID(@dbToEdit.category) %>
-  <% bHasHTML=false;bHasCSS=false;bHasJavascript=false;bHasRoR=false;bHasPython=false;bHasJava=false;bHasCpp=false;bHasSql=false;bHasGit=false;bHasLinux=false;bHasOthers=false %>
-  <% hsiCategory.each do |hK,hV|%> 
-    <% case hK %>
-    <% when $sTagHTML %>
-      <% bHasHTML=true %>
-    <% when $sTagCSS %>
-      <% bHasCSS=true %>
-    <% when $sTagJavascript %>
-      <% bHasJavascript=true %>
-    <% when $sTagRoR %>
-      <% bHasRoR=true %>
-    <% when $sTagPython %>
-      <% bHasPython=true %>
-    <% when $sTagJava %>
-      <% bHasJava=true %>
-    <% when $sTagCpp %>
-      <% bHasCpp=true %>
-    <% when $sTagGit %>
-      <% bHasGit=true %>
-    <% when $sTagLinux %>
-      <% bHasLinux=true %>
-    <% when $sTagSql %>
-      <% bHasSql=true %>
-    <% when $sTagOthers %>
-      <% bHasOthers=true %>  
-    <% end %>
+<%= form_for :blog, :url=>updateBlog_path(@dBlog.id) do |f| %>
+  <% @bHasCategory=Array.new($aoBlogCategories.length,false) %>
+  <% asCategory=parseCategory(@dBlog.category) %>
+  <% asCategory.each do |sC|%> 
+    <% @bHasCategory[$hsiCategoryNameToArrayIndex[sC]]=true %>
   <% end %>
   
   
-  <%= render :partial=>'blogEditor',:locals=>{:form=>f,:bHTML=>bHasHTML,:bCSS=>bHasCSS,:bJavascript=>bHasJavascript,:bRoR=>bHasRoR,:bPython=>bHasPython,:bJava=>bHasJava,:bCpp=>bHasCpp,:bSql=>bHasSql,:bGit=>bHasGit,:bLinux=>bHasLinux,:bOthers=>bHasOthers} %>
-  <%= f.submit :onclick => "return confirm('Make sure you choose at least one category for this blog.')" %>
+  <%= render :partial=>'blogEditor',:locals=>{:form=>f} %>
+  <%= f.submit %>
 <% end %>

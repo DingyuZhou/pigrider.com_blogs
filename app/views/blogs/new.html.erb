@@ -5,7 +5,13 @@
 <% end %>
 
 
-<%= form_for @dbNewBlog do |f| %>
-  <%= render :partial=>'blogEditor',:locals=>{:form=>f,:bHTML=>false,:bCSS=>false,:bJavascript=>false,:bRoR=>false,:bPython=>false,:bJava=>false,:bCpp=>false,:bSql=>false,:bGit=>false,:bLinux=>false,:bOthers=>false} %>
-  <%= f.submit :onclick => "return confirm('Make sure you choose at least one category for this blog.')" %>
+<%= form_for @dBlog do |f| %>
+  <% @bHasCategory=Array.new($aoBlogCategories.length,false) %>
+  <% asCategory=parseCategory(@dBlog.category) %> 
+  <% asCategory.each do |sC|%>
+    <% @bHasCategory[$hsiCategoryNameToArrayIndex[sC]]=true %>
+  <% end %>
+
+  <%= render :partial=>'blogEditor',:locals=>{:form=>f} %>
+  <%= f.submit %>
 <% end %>

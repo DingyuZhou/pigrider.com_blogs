@@ -97,3 +97,18 @@ footer {
     @include LinkStyle(#0000ff,#ff0000,#0000ff);
   }
 }
+
+
+.ErrorReportContainer {
+  margin:0 0 40px 0;
+  p {
+    font-weight:bold;
+    font-size:20px;
+  }
+  ul {
+    margin:0 0 0 30px;
+    li {
+      color:red;
+    }
+  }
+}

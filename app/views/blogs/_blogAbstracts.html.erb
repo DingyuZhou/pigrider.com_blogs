@@ -6,13 +6,14 @@
     <p class="BlogDateAuthor">[Author: <%= link_to b.author, blogsByAuthor_path(:byAuthor=>b.author) %>] &#160; [<%= b.updated_at.in_time_zone(nUserTimeZoneOffset).strftime("%a, %Y-%m-%d, %H:%M") %>] &#160; [<%= b.views %> views]</p>
     
     <p>      
-      <% hsiCategory=parseCategoryAndID(b.category) %>
-      <% hsiCategory.each do |hK,hV| %>
-        <%= link_to hK, blogsCategory_path(:type=>hK), {:class=>"BlogCategory"} %>
+      <% asCategory=parseCategory(b.category) %>
+      <% asCategory.each do |sC| %>
+        <%= link_to sC, blogsCategory_path(:type=>sC), {:class=>"BlogCategory"} %>
       <% end %>
     </p>
     
-    <p class="BlogAbstract"><%= raw(strip_tags(b.abstract)) %> ... <i><%= link_to "see full article", b, :class=>"SeeFullArticleTag" %></i></p>
+    <div class="BlogAbstract"><pre><%= raw(b.abstract.gsub(/\n/,"</pre><pre>")) %> ... <i><%= link_to "see full article", b, :class=>"SeeFullArticleTag" %></i></pre></div>
+
     
     <% if userSignedIn(b.author) %>
       <p class="BlogManage">

@@ -32,9 +32,9 @@
     <% end %>
     
     <p>      
-      <% hsiCategory=parseCategoryAndID(@dbShowBlog.category) %>
-      <% hsiCategory.each do |hK,hV| %>
-        <%= link_to hK, blogsCategory_path(:type=>hK), {:class=>"BlogCategory"} %>
+      <% asCategory=parseCategory(@dbShowBlog.category) %>
+      <% asCategory.each do |sC| %>
+        <%= link_to sC, blogsCategory_path(:type=>sC), {:class=>"BlogCategory"} %>
       <% end %>
     </p>
     

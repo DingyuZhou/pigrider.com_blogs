@@ -5,34 +5,13 @@
   <% dbPopularBlog=Blog.find(:all,:select=>"blogs.id,blogs.title",:order=>"views desc",:limit=>$nNumberOfMostPopularBlogs) %>
 <% else %>
   <% bCategory=true %>
+  <% iCategory=$hsiCategoryNameToArrayIndex[onThisPage] %>
   
-  <% case onThisPage %>
-  <% when $sTagHTML %>
-    <% sIndexTableName="html_indices" %>
-  <% when $sTagCSS %>
-    <% sIndexTableName="css_indices" %>
-  <% when $sTagJavascript %>
-    <% sIndexTableName="javascript_indices" %>
-  <% when $sTagRoR %>
-    <% sIndexTableName="ror_indices" %>
-  <% when $sTagPython %>
-    <% sIndexTableName="python_indices" %>
-  <% when $sTagJava %>
-    <% sIndexTableName="java_indices" %>
-  <% when $sTagCpp %>
-    <% sIndexTableName="cpp_indices" %>
-  <% when $sTagSql %>
-    <% sIndexTableName="sql_indices" %>
-  <% when $sTagGit %>
-    <% sIndexTableName="git_indices" %>
-  <% when $sTagLinux %>
-    <% sIndexTableName="linux_indices" %>
-
-  <% when $sTagOthers %>
-    <% sIndexTableName="others_indices" %>  
-  <% else %>
+  <% if iCategory.nil? %>
     <% bCategory=false %>
     <% dbPopularBlog=Blog.find(:all,:select=>"blogs.id,blogs.title",:conditions=>{:author=>onThisPage},:order=>"views desc",:limit=>$nNumberOfMostPopularBlogs) %>
+  <% else %>
+    <% sIndexTableName=$aoBlogCategories[iCategory].sDatabaseTableName %>
   <% end %>
   
   <% if bCategory %>

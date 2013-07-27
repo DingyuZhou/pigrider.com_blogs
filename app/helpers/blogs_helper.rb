@@ -1,13 +1,18 @@
 module BlogsHelper
-  def parseCategoryAndID(sBlogCategory)
+  def parseCategory(sBlogCategory)
     asCategory=sBlogCategory.split(';')
-    hsiCategory={}
-    
-    asCategory.each do |sC|
-      asTmp=sC.split(':')
-      hsiCategory[asTmp[0]]=asTmp[1].to_i
+    return asCategory
+  end
+  
+  
+  class BlogCategory
+    attr_accessor :sCategoryName, :sHashKeyName, :sModelClassName, :sDatabaseTableName, :sSHJSCode
+    def initialize(sCategoryName,sHashKeyName,sModelClassName,sDatabaseTableName,sSHJSCode=nil)
+      @sCategoryName=sCategoryName
+      @sHashKeyName=sHashKeyName
+      @sModelClassName=sModelClassName
+      @sDatabaseTableName=sDatabaseTableName
+      @sSHJSCode=sSHJSCode
     end
-    
-    return hsiCategory
   end
 end

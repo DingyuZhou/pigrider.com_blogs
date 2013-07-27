@@ -67,7 +67,7 @@
 
 .BlogTitleAbstract {
   font-weight:bold;
-  font-size:22px;
+  font-size:25px;
   margin:0 0 5px 0;
   overflow:hidden;
   white-space:nowrap; 
@@ -99,7 +99,13 @@
 
 
 .BlogAbstract {
-  // background-color:#ffecd4;
+  padding:0 40px 0 0;
+  pre {
+    font-size:16px;
+    font-family:Helvetica,Arial;
+    font-style:italic;
+    padding:0 5px 8px 5px;
+  }
 }
 
 
