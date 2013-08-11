@@ -1,29 +1,14 @@
 PigRiderBlog::Application.routes.draw do
-  # main page
-  match "/AboutUs"=>"main#aboutUs", :as=>:aboutUs
-  match "/ContactUs"=>"main#contactUs", :as=>:contactUs
   
+  mount PigriderLayout::Engine, :at=>"/info"
+  mount PigriderUser::Engine, :at=>"/user"
   
+   
   # blogs
   resources :blogs
   post "/updateBlog/:id"=>"blogs#update", :as=>:updateBlog
   match "/blogsCategory"=>"blogs#category", :as=>:blogsCategory
   match "/blogsByAuthor"=>"blogs#byAuthor", :as=>:blogsByAuthor
-  
-  
-  # users
-  resources :users
-  match "/UserSignUp"=>"users#new", :as=>:userSignUp
-  match "/UserEditEmail"=>"users#editEmail", :as=>:editEmail
-  post "/UserUpdateEmail"=>"users#updateEmail", :as=>:updateEmail
-  match "/UserChangePassowrd"=>"users#changePassword", :as=>:changePassword
-  post "/UserUpdatePassword"=>"users#updatePassword", :as=>:updatePassword
-  
-  
-  # sessions  
-  resources :sessions, :only=>[:new,:create,:destroy]
-  match "/UserSignIn"=>"sessions#new", :as=>:userSignIn
-  match "/UserSignOut"=>"sessions#destroy", :as=>:userSignOut, :via=>:delete
 
 
   # The priority is based upon order of creation:

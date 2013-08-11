@@ -15,7 +15,7 @@
     <div class="BlogAbstract"><pre><%= raw(b.abstract.gsub(/\n/,"</pre><pre>")) %> ... <i><%= link_to "see full article", b, :class=>"SeeFullArticleTag" %></i></pre></div>
 
     
-    <% if userSignedIn(b.author) %>
+    <% if usernameForSignedInUser==b.author || isAdministrator %>
       <p class="BlogManage">
         <%= link_to "Edit", edit_blog_path(b) %>
         <%= link_to "Delete", b, :method=>:delete, data:{confirm: 'Are you sure?'} %>

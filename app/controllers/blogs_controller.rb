@@ -1,6 +1,6 @@
 class BlogsController < ApplicationController
   include BlogsHelper
-  include SessionsHelper
+  include PigriderUser::SessionsHelper
   include ActionView::Helpers::SanitizeHelper
   
   
@@ -36,7 +36,7 @@ class BlogsController < ApplicationController
 private
   def notSignedIn
     if !userSignedIn
-      redirect_to userSignIn_path
+      redirect_to pigrider_user.signInUser_path
     end
   end
    
@@ -44,61 +44,36 @@ private
   def sortFormInput(hFormInput)
     @oSortedBlogInput=hFormInput
     @oSortedBlogInput[:category]=""
-    @oSortedBlogInput[:author]=usernameForSignedInUser
     @oSortedBlogInput[:abstract]=strip_tags(@oSortedBlogInput[:content]).gsub(/[\r\n]+/,"\n")[0..299].strip
     @oSortedBlogInput[:category]=""
-    @bHasCategory=Array.new($aoBlogCategories.length,false)
     
-    $aoBlogCategories.each_with_index do |oBC,index|
+    $aoBlogCategories.each do |oBC|
       if @oSortedBlogInput[oBC.sHashKeyName]=="1"
         @oSortedBlogInput[:category]+=oBC.sCategoryName+";"
-        @bHasCategory[index]=true
       end
       @oSortedBlogInput.delete(oBC.sHashKeyName)
     end
   end
   
   
-  def validateBlogInput(sAction)
-    @dBlog=Blog.new(@oSortedBlogInput)
-    
+  def validateBlogInput(dBlog,sAction)  
     # validate the uniqueness of the Blog title
     bValidTitle=true;
-    dTmpBlog=Blog.find(:first, :select=>"id", :conditions=>{:title=>@dBlog.title,:author=>@dBlog.author})
+    dTmpBlog=Blog.find(:first, :select=>"id", :conditions=>{:title=>dBlog.title,:author=>dBlog.author})
     unless dTmpBlog.nil?
-      if sAction=="create" || (sAction=="update" && dTmpBlog.id!=@dEditedBlog.id)
+      if sAction=="create" || (sAction=="update" && dTmpBlog.id!=dBlog.id)
         bValidTitle=false;
       end
     end
     
-    if @dBlog.valid? && bValidTitle
+    if bValidTitle && dBlog.valid?
       return true
     else      # Fail the model validation.
       unless bValidTitle
-        @dBlog.errors["titleHasBeenTaken"]='You already have a blog with the same title.'
+        dBlog.errors["titleHasBeenTaken"]='You already have a blog with the same title.'
       end
       return false
     end  
-  end
-  
-  
-  def insertIntoDatabase
-    @dBlog.id=nil       
-    @dBlog.save(:validate=>false)
-    
-    $aoBlogCategories.each_with_index do |oBC,index|
-      if @bHasCategory[index]
-        dTmp=Kernel.const_get(oBC.sModelClassName).create(:blogID=>@dBlog.id)
-      end
-    end
-  end
-  
-  
-  def deleteFromCategoryDatabases(sBlogCategory,iBlogID)    
-    asCategory=parseCategory(sBlogCategory)
-    asCategory.each do |sC|
-      Kernel.const_get($aoBlogCategories[$hsiCategoryNameToArrayIndex[sC]].sModelClassName).where(:blogID=>iBlogID).delete_all
-    end
   end
 
 
@@ -114,7 +89,7 @@ public
       nTotalRecords=Blog.count();
       $nTotalPages=nTotalRecords%$nNumberOfBlogsEachPage>0 ? nTotalRecords/$nNumberOfBlogsEachPage+1 : nTotalRecords/$nNumberOfBlogsEachPage
       
-      @dbBlogs=Blog.find(:all,:select=>"abstract,author,category,id,title,updated_at,views",:order=>"id desc",:limit=>"#{iLimitStart},#{$nNumberOfBlogsEachPage}")
+      @dbBlogs=Blog.find(:all,:select=>"abstract,author,category,id,title,updated_at,views",:order=>"updated_at desc",:limit=>"#{iLimitStart},#{$nNumberOfBlogsEachPage}")
       respond_to do |format|
         format.html
       end
@@ -127,8 +102,16 @@ public
     ActiveRecord::Base.transaction do
       sortFormInput(params[:blog])
       @oSortedBlogInput[:views]=0
-      if validateBlogInput("create")
-        insertIntoDatabase
+      @oSortedBlogInput[:author]=usernameForSignedInUser
+      @dBlog=Blog.new(@oSortedBlogInput)
+      
+      if validateBlogInput(@dBlog,"create")      
+        @dBlog.save(:validate=>false)  
+        asCategories=parseCategory(@dBlog.category)
+        asCategories.each do |sC|
+          Kernel.const_get($aoBlogCategories[$hsiCategoryNameToArrayIndex[sC]].sModelClassName).create(:blogID=>@dBlog.id)
+        end
+        
         redirect_to @dBlog
       else
         render 'new'
@@ -160,18 +143,38 @@ public
   def update
     # Use 'transaction' to improve sql operation speed, because this makes all sql operations in one transaction.
     ActiveRecord::Base.transaction do
-      @dEditedBlog=Blog.find(params[:id],:select=>"id,category,created_at,views")
       sortFormInput(params[:blog])
-      @oSortedBlogInput[:created_at]=@dEditedBlog[:created_at]
-      @oSortedBlogInput[:views]=@dEditedBlog[:views]
+      @dBlog=Blog.find(params[:id])
+      ssBeforeCategories=parseCategory(@dBlog.category).to_set
+      @dBlog.abstract=@oSortedBlogInput[:abstract]
+      @dBlog.category=@oSortedBlogInput[:category]
+      @dBlog.content=@oSortedBlogInput[:content]
+      @dBlog.title=@oSortedBlogInput[:title]
       
-      if validateBlogInput("update")
-        deleteFromCategoryDatabases(@dEditedBlog.category,@dEditedBlog.id)
-        @dEditedBlog.destroy     
-        insertIntoDatabase
+      # Do nothing for categories that are the same before and after update
+      asCurrentCategories=parseCategory(@dBlog.category)
+      asNewCategories=Array.new
+      asCurrentCategories.each do |sC|
+        if ssBeforeCategories.delete?(sC).nil?
+          asNewCategories.push(sC)
+        end
+      end
+      
+      if validateBlogInput(@dBlog,"update")
+        @dBlog.save(:validate=>false)
+        
+        # Delete no longer chosen categories
+        ssBeforeCategories.each do |sC|
+          Kernel.const_get($aoBlogCategories[$hsiCategoryNameToArrayIndex[sC]].sModelClassName).find(@dBlog.id).delete
+        end
+        
+        # Add new chosen categories
+        asNewCategories.each do |sC|
+          Kernel.const_get($aoBlogCategories[$hsiCategoryNameToArrayIndex[sC]].sModelClassName).create(:blogID=>@dBlog.id)
+        end
+        
         redirect_to @dBlog
       else
-        @dBlog.id=@dEditedBlog.id
         render 'edit'
       end
     end
@@ -182,8 +185,11 @@ public
     # Use 'transaction' to improve sql operation speed, because this makes all sql operations in one transaction.
     ActiveRecord::Base.transaction do
       dbToDelete=Blog.find(params[:id],:select=>"id,category")
-      deleteFromCategoryDatabases(dbToDelete.category,dbToDelete.id)
-      dbToDelete.destroy
+      asCategory=parseCategory(dbToDelete.category)
+      asCategory.each do |sC|
+        Kernel.const_get($aoBlogCategories[$hsiCategoryNameToArrayIndex[sC]].sModelClassName).find(dbToDelete.id).delete
+      end
+      dbToDelete.delete
     end
 
     redirect_to root_path
@@ -203,7 +209,7 @@ public
       nTotalRecords=Kernel.const_get($aoBlogCategories[iCategory].sModelClassName).count()
       sIndexTableName=$aoBlogCategories[iCategory].sDatabaseTableName
             
-      @dbBlogs=Blog.find(:all,:select=>"abstract,author,blogs.id,category,title,blogs.updated_at,views",:joins=>"INNER JOIN #{sIndexTableName} it ON it.blogID=blogs.id",:order=>"id desc",:limit=>"#{iLimitStart},#{$nNumberOfBlogsEachPage}")
+      @dbBlogs=Blog.find(:all,:select=>"abstract,author,blogs.id,category,title,blogs.updated_at,views",:joins=>"INNER JOIN #{sIndexTableName} it ON it.blogID=blogs.id",:order=>"updated_at desc",:limit=>"#{iLimitStart},#{$nNumberOfBlogsEachPage}")
       $nTotalPages=nTotalRecords%$nNumberOfBlogsEachPage>0 ? nTotalRecords/$nNumberOfBlogsEachPage+1 : nTotalRecords/$nNumberOfBlogsEachPage
     end
   end
@@ -217,7 +223,7 @@ public
     end
     nTotalRecords=Blog.count(:conditions=>{:author=>params[:byAuthor]})
     $nTotalPages=nTotalRecords%$nNumberOfBlogsEachPage>0 ? nTotalRecords/$nNumberOfBlogsEachPage+1 : nTotalRecords/$nNumberOfBlogsEachPage
-    @dbBlogs=Blog.find(:all,:select=>"abstract,author,category,id,title,updated_at,views",:conditions=>{:author=>params[:byAuthor]},:order=>"id desc",:limit=>"#{iLimitStart},#{$nNumberOfBlogsEachPage}")
+    @dbBlogs=Blog.find(:all,:select=>"abstract,author,category,id,title,updated_at,views",:conditions=>{:author=>params[:byAuthor]},:order=>"updated_at desc",:limit=>"#{iLimitStart},#{$nNumberOfBlogsEachPage}")
   end
   
 end

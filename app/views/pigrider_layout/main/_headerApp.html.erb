@@ -1,0 +1,13 @@
+<div class="FloatLeft">
+  <h1 style="margin:5px 5px 5px 10px"><i><span style="color:yellow">Pig</span><span style="color:blue">Rider</span> <span style="color:red">Blogs</span></i></h1>
+</div>
+
+<% if userSignedIn %>
+  <div class="FloatRight" style="margin:2px 10px 0 0">
+    <i>Hi <b><%= usernameForSignedInUser %></b>!</i>
+    <%= link_to "Settings", pigrider_user.showUser_path(useridForSignedInUser), :style=>"margin:0 5px 0 5px" %>
+    <%= link_to "Sign Out", pigrider_user.signOutUser_path %>
+  </div>
+<% else %>
+  <%= link_to "Sign In", pigrider_user.signInUser_path, :class=>"FloatRight", :style=>"margin:2px 10px 0 0" %>
+<% end %>

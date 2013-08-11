@@ -27,7 +27,7 @@
 
   <%= link_to "All", blogs_path, {:class=>sTagAllClass} %>
   <% if bByAuthor %>
-    <%= link_to onThisPage, blogsByAuthor_path(:byAuthor=>onThisPage[11..-1]), {:class=>"OnThisCategoryTag"}%>
+    <%= link_to onThisPage, blogsByAuthor_path(:byAuthor=>onThisPage[11..-1]), {:class=>"OnThisCategoryTag"} %>
   <% end %>
   
   <% if userSignedIn %>

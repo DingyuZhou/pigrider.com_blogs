@@ -26,105 +26,106 @@ ActiveRecord::Schema.define(:version => 20130613031144) do
 
   add_index "blogs", ["author"], :name => "index_blogs_on_author"
   add_index "blogs", ["title", "author"], :name => "index_blogs_on_title_and_author", :unique => true
+  add_index "blogs", ["updated_at"], :name => "index_blogs_on_updated_at"
   add_index "blogs", ["views"], :name => "index_blogs_on_views"
 
-  create_table "cpp_indices", :force => true do |t|
+  create_table "cpp_indices", :id => false, :force => true do |t|
     t.integer  "blogID",     :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "cpp_indices", ["blogID"], :name => "index_cpp_indices_on_blogID", :unique => true
+  add_index "cpp_indices", ["updated_at"], :name => "index_cpp_indices_on_updated_at"
 
-  create_table "css_indices", :force => true do |t|
+  create_table "css_indices", :id => false, :force => true do |t|
     t.integer  "blogID",     :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "css_indices", ["blogID"], :name => "index_css_indices_on_blogID", :unique => true
+  add_index "css_indices", ["updated_at"], :name => "index_css_indices_on_updated_at"
 
-  create_table "git_indices", :force => true do |t|
+  create_table "git_indices", :id => false, :force => true do |t|
     t.integer  "blogID",     :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "git_indices", ["blogID"], :name => "index_git_indices_on_blogID", :unique => true
+  add_index "git_indices", ["updated_at"], :name => "index_git_indices_on_updated_at"
 
-  create_table "html_indices", :force => true do |t|
+  create_table "html_indices", :id => false, :force => true do |t|
     t.integer  "blogID",     :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "html_indices", ["blogID"], :name => "index_html_indices_on_blogID", :unique => true
+  add_index "html_indices", ["updated_at"], :name => "index_html_indices_on_updated_at"
 
-  create_table "java_indices", :force => true do |t|
+  create_table "java_indices", :id => false, :force => true do |t|
     t.integer  "blogID",     :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "java_indices", ["blogID"], :name => "index_java_indices_on_blogID", :unique => true
+  add_index "java_indices", ["updated_at"], :name => "index_java_indices_on_updated_at"
 
-  create_table "javascript_indices", :force => true do |t|
+  create_table "javascript_indices", :id => false, :force => true do |t|
     t.integer  "blogID",     :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "javascript_indices", ["blogID"], :name => "index_javascript_indices_on_blogID", :unique => true
+  add_index "javascript_indices", ["updated_at"], :name => "index_javascript_indices_on_updated_at"
 
-  create_table "linux_indices", :force => true do |t|
+  create_table "linux_indices", :id => false, :force => true do |t|
     t.integer  "blogID",     :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "linux_indices", ["blogID"], :name => "index_linux_indices_on_blogID", :unique => true
+  add_index "linux_indices", ["updated_at"], :name => "index_linux_indices_on_updated_at"
 
-  create_table "others_indices", :force => true do |t|
+  create_table "others_indices", :id => false, :force => true do |t|
     t.integer  "blogID",     :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "others_indices", ["blogID"], :name => "index_others_indices_on_blogID", :unique => true
+  add_index "others_indices", ["updated_at"], :name => "index_others_indices_on_updated_at"
 
-  create_table "python_indices", :force => true do |t|
+  create_table "python_indices", :id => false, :force => true do |t|
     t.integer  "blogID",     :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "python_indices", ["blogID"], :name => "index_python_indices_on_blogID", :unique => true
+  add_index "python_indices", ["updated_at"], :name => "index_python_indices_on_updated_at"
 
-  create_table "ror_indices", :force => true do |t|
+  create_table "ror_indices", :id => false, :force => true do |t|
     t.integer  "blogID",     :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "ror_indices", ["blogID"], :name => "index_ror_indices_on_blogID", :unique => true
+  add_index "ror_indices", ["updated_at"], :name => "index_ror_indices_on_updated_at"
 
-  create_table "sql_indices", :force => true do |t|
+  create_table "sql_indices", :id => false, :force => true do |t|
     t.integer  "blogID",     :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "sql_indices", ["blogID"], :name => "index_sql_indices_on_blogID", :unique => true
-
-  create_table "users", :force => true do |t|
-    t.string   "username",        :limit => 50, :null => false
-    t.string   "email",                         :null => false
-    t.string   "password_digest",               :null => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-  end
-
-  add_index "users", ["email"], :name => "index_users_on_email"
-  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+  add_index "sql_indices", ["updated_at"], :name => "index_sql_indices_on_updated_at"
 
 end

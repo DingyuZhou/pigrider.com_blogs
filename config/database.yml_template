@@ -17,6 +17,14 @@ development:
   username: 
   password: 
   host: pigrider.com
+  
+pigrider_user_development:
+  adapter: mysql2
+  database: pigRiderAccount_development
+  username: 
+  password: 
+  host: pigrider.com
+
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -30,6 +38,14 @@ test:
   username: 
   password: 
   host: pigrider.com
+  
+pigrider_user_test:
+  adapter: mysql2
+  database: pigRiderAccount_test
+  username: 
+  password: 
+  host: pigrider.com
+  
 
 production:
   adapter: mysql2
@@ -37,6 +53,13 @@ production:
   reconnect: false
   database: pigRiderBlog_production
   pool: 5
+  username: 
+  password: 
+  host: pigrider.com
+
+pigrider_user_production:
+  adapter: mysql2
+  database: pigRiderAccount_production
   username: 
   password: 
   host: pigrider.com

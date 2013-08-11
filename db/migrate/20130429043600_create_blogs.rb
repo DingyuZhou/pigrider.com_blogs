@@ -14,6 +14,7 @@ class CreateBlogs < ActiveRecord::Migration
     add_index :blogs, [:title, :author], :unique=>true
     add_index :blogs, [:author]
     add_index :blogs, [:views]
+    add_index :blogs, [:updated_at]
   end
 end
 

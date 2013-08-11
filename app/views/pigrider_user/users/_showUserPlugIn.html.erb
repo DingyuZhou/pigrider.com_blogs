@@ -1,0 +1,6 @@
+<%= link_to "Write A New Blog", main_app.new_blog_path %> &#160; &#160; &#160;
+<%= link_to "Manage My Blogs", main_app.blogsByAuthor_path(:byAuthor=>usernameForSignedInUser) %>
+<% if isAdministrator %>
+&#160; &#160; &#160;
+<%= link_to "Manage All Blogs", main_app.root_path %>
+<% end %>
