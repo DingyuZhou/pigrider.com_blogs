@@ -10,7 +10,7 @@
   <% end %>
 <% end %>  
 
-<div>
+<div class="ContainerForCategoryTags">
   <% if iCategory.nil? %>
     <% $aoBlogCategories.each do |oBC| %>
       <%= link_to oBC.sCategoryName, blogsCategory_path(:type=>oBC.sCategoryName), {:class=>"CategoryTag"} %>

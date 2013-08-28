@@ -22,6 +22,9 @@
 
 <%= render :partial=>'categoryTags', :locals=>{:onThisPage=>"ShowBlog"} %>
 
+<div class="FloatRight">
+  <%= render 'pigrider_layout/main/directSharing' %>
+</div>
 
 <div class="ShowBlog">
     <h2 class="BlogTitleComplete"><%= @dbShowBlog.title %></h2>

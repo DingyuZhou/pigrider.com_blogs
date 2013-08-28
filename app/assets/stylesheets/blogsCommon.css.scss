@@ -22,9 +22,14 @@
 }
 
 
+.ContainerForCategoryTags {
+  margin:0 0 10px 0;
+}
+
+
 .ContainerForBlogAbstracts {
   width:65%;
-  margin:20px 0;
+  margin:2px 0;
 }
 
 
@@ -41,7 +46,7 @@
   -webkit-border-radius:9px;
   border-radius:9px;
   padding:15px;
-  margin:30px 20px 0 0;
+  margin:40px 20px 0 0;
   a {
     @include LinkStyle(#0000ff,#ff0000,#cc0099);
   }

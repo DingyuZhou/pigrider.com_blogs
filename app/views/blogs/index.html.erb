@@ -13,6 +13,11 @@
 <% sTagForThisPage="All" %>
 <%= render :partial=>'categoryTags', :locals=>{:onThisPage=>sTagForThisPage} %>
 
+<div class="FloatRight">
+  <%= render 'pigrider_layout/main/directSharing' %>
+</div>
+<div></div>
+
 <div class="FloatLeft ContainerForBlogAbstracts">
   <%= render :partial=>'pagination', :locals=>{:nNumberOfPageTags=>$nNumberOfPageTags,:nTotalPages=>$nTotalPages,:bLoadCSS=>true} %>
   <div class="CFBAInnerContainer"><%= render 'blogAbstracts' %></div>
