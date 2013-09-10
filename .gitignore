@@ -5,7 +5,7 @@
 #   git config --global core.excludesfile ~/.gitignore_global
 
 # Ignore all logfiles and tempfiles.
-/log/*.log
+/log/*.log*
 /tmp
 /test
 
@@ -30,4 +30,8 @@
 /db/*.sqlite3
 
 *.DS_Store
+
+# Ignore Solr server files which are used in development
+/solr
+
 

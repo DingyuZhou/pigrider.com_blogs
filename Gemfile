@@ -4,6 +4,12 @@ gem 'rails', '3.2.13'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'pigrider_layout', :path=>'../pigRiderLayout'
 gem 'pigrider_user', :path=>'../pigRiderUser'
+gem 'sunspot_rails'
+
+
+group :development do
+  gem 'sunspot_solr'
+end
 
 
 # Bundle edge Rails instead:

@@ -5,7 +5,9 @@ PigRiderBlog::Application.routes.draw do
   
    
   # blogs
-  resources :blogs
+  resources :blogs do
+    get 'search', :on=>:collection
+  end
   post "/updateBlog/:id"=>"blogs#update", :as=>:updateBlog
   match "/blogsCategory"=>"blogs#category", :as=>:blogsCategory
   match "/blogsByAuthor"=>"blogs#byAuthor", :as=>:blogsByAuthor

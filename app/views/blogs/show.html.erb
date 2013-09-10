@@ -20,10 +20,16 @@
 <% end %>
 
 
-<%= render :partial=>'categoryTags', :locals=>{:onThisPage=>"ShowBlog"} %>
+<%= render :partial=>'categoryTags', :locals=>{:onThisPage=>:ShowBlog} %>
 
-<div class="FloatRight">
-  <%= render 'pigrider_layout/main/directSharing' %>
+<div class="ShareAndSearch">
+  <div class="FloatLeft ShareDiv">
+    <%= render 'pigrider_layout/main/directSharing' %>
+  </div>
+  
+  <div class="FloatLeft SearchDiv">
+    <%= render 'searchForm' %>
+  </div>
 </div>
 
 <div class="ShowBlog">

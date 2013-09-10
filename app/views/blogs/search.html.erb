@@ -1,0 +1,30 @@
+<% provide :webpageTitle, "Search in PigRider Blogs" %>
+
+<% provide :webpageCSS do %>
+  <%= stylesheet_link_tag "blogsCommon", :media=>"all" %>
+<% end %>
+
+<% provide :webpageMetaTag do %>
+  <meta name="keywords" content="Search in PigRider Blogs" />
+  <meta name="description" content="Search in PigRider Blogs" />
+<% end %>
+
+<%= render :partial=>'categoryTags', :locals=>{:onThisPage=>:SearchResult} %>
+
+<div class="ShareAndSearch">
+  <div class="FloatLeft ShareDiv">
+    <h2 style="margin:0 0 20px 0;"><i>Search Results for "<span style='color:red;'><%= @sSearchKeyword %></span>":</i></h2>
+  </div>
+  
+  <div class="FloatLeft SearchDiv">
+    <%= render 'searchForm' %>
+  </div>
+</div>
+
+<div class="FloatLeft ContainerForBlogAbstracts">
+  <%= render :partial=>'pagination', :locals=>{:nNumberOfPageTags=>$nNumberOfPageTags,:nTotalPages=>$nTotalPages,:bLoadCSS=>true} %>
+  <div class="CFBAInnerContainer"><%= render 'blogAbstracts' %></div>
+  <%= render :partial=>'pagination', :locals=>{:nNumberOfPageTags=>$nNumberOfPageTags,:nTotalPages=>$nTotalPages,:bLoadCSS=>false} %>
+</div>
+
+<div></div>

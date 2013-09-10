@@ -1,7 +1,7 @@
 <% $nNumberOfMostPopularBlogs=10 %>
 
 
-<% if onThisPage=="All" %>
+<% if onThisPage==:All %>
   <% dbPopularBlog=Blog.find(:all,:select=>"blogs.id,blogs.title",:order=>"views desc",:limit=>$nNumberOfMostPopularBlogs) %>
 <% else %>
   <% bCategory=true %>

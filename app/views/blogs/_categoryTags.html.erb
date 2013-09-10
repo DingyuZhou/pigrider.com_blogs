@@ -1,10 +1,10 @@
-<% sTagAllClass="CategoryTag" %>
+<% sTagAllClass=:CategoryTag %>
 <% bByAuthor=false %>
 <% iCategory=$hsiCategoryNameToArrayIndex[onThisPage] %>
   
-<% if iCategory.nil? && onThisPage!="ShowBlog" %>
-  <% if onThisPage=="All" %>
-    <% sTagAllClass="OnThisCategoryTag" %>
+<% if iCategory.nil? && onThisPage!=:ShowBlog && onThisPage!=:SearchResult %>
+  <% if onThisPage==:All %>
+    <% sTagAllClass=:OnThisCategoryTag %>
   <% else %>
     <% bByAuthor=true %>
   <% end %>
@@ -13,25 +13,26 @@
 <div class="ContainerForCategoryTags">
   <% if iCategory.nil? %>
     <% $aoBlogCategories.each do |oBC| %>
-      <%= link_to oBC.sCategoryName, blogsCategory_path(:type=>oBC.sCategoryName), {:class=>"CategoryTag"} %>
+      <%= link_to oBC.sCategoryName, blogsCategory_path(:type=>oBC.sCategoryName), {:class=>:CategoryTag} %>
     <% end %>
   <% else %>
     <% for ii in 0..iCategory-1 %>
-      <%= link_to $aoBlogCategories[ii].sCategoryName, blogsCategory_path(:type=>$aoBlogCategories[ii].sCategoryName), {:class=>"CategoryTag"} %>
+      <%= link_to $aoBlogCategories[ii].sCategoryName, blogsCategory_path(:type=>$aoBlogCategories[ii].sCategoryName), {:class=>:CategoryTag} %>
     <% end %>
-    <%= link_to $aoBlogCategories[iCategory].sCategoryName, blogsCategory_path(:type=>$aoBlogCategories[iCategory].sCategoryName), {:class=>"OnThisCategoryTag"} %>
+    <%= link_to $aoBlogCategories[iCategory].sCategoryName, blogsCategory_path(:type=>$aoBlogCategories[iCategory].sCategoryName), {:class=>:OnThisCategoryTag} %>
     <% for ii in iCategory+1..$aoBlogCategories.length-1 %>
-      <%= link_to $aoBlogCategories[ii].sCategoryName, blogsCategory_path(:type=>$aoBlogCategories[ii].sCategoryName), {:class=>"CategoryTag"} %>
+      <%= link_to $aoBlogCategories[ii].sCategoryName, blogsCategory_path(:type=>$aoBlogCategories[ii].sCategoryName), {:class=>:CategoryTag} %>
     <% end %>
   <% end %>
 
-  <%= link_to "All", blogs_path, {:class=>sTagAllClass} %>
+  <%= link_to :All, blogs_path, {:class=>sTagAllClass} %>
+  
   <% if bByAuthor %>
-    <%= link_to onThisPage, blogsByAuthor_path(:byAuthor=>onThisPage[11..-1]), {:class=>"OnThisCategoryTag"} %>
+    <%= link_to onThisPage, blogsByAuthor_path(:byAuthor=>onThisPage[11..-1]), {:class=>:OnThisCategoryTag} %>
   <% end %>
   
   <% if userSignedIn %>
-    <%= link_to "Write A New Blog", new_blog_path, {:class=>"CategoryTag", :style=>"background-color:#b5ff75; margin:0 0 0 30px;"} %>
+    <%= link_to "Write A New Blog", new_blog_path, {:class=>:CategoryTag, :style=>"background-color:#b5ff75; margin:0 0 0 30px;"} %>
   <% end %>
 </div>
 

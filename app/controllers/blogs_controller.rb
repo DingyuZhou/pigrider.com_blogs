@@ -226,4 +226,53 @@ public
     @dbBlogs=Blog.find(:all,:select=>"abstract,author,category,id,title,updated_at,views",:conditions=>{:author=>params[:byAuthor]},:order=>"updated_at desc",:limit=>"#{iLimitStart},#{$nNumberOfBlogsEachPage}")
   end
   
+  
+  def search
+    if params.has_key?(:currentPage)
+      iPage=params[:currentPage].to_i
+    else
+      iPage=1
+    end
+    
+    @sSearchKeyword=params[:search][:keyword]
+    
+    oSearch = Blog.search do
+      fulltext params[:search][:keyword] do
+        boost_fields :title=>10.0
+        boost_fields :author=>5.0
+        boost_fields :content=>5.0
+        highlight :title, :max_snippets=>1
+        highlight :author, :max_snippets=>1, :fragment_size=>100
+        highlight :content, :max_snippets=>3
+        highlight :category, :max_snippets=>1,  :fragment_size=>400
+      end
+
+      paginate :page => iPage, :per_page => 10
+    end
+    
+    oSearch.each_hit_with_result do |oHit,dbResult|     
+      oHit.highlights(:title).each do |oHL|
+        dbResult.title = oHL.format { |sW| "<span style='color:red'>#{sW}</span>" }
+      end
+      
+      oHit.highlights(:author).each do |oHL|
+        dbResult.author = oHL.format { |sW| "<span style='color:red'>#{sW}</span>" }
+      end
+      
+      if oHit.highlights(:content).length>0
+        dbResult.abstract=""
+      end  
+      oHit.highlights(:content).each do |oHL|
+        dbResult.abstract += oHL.format { |sW| "<span style='color:red'>#{sW}</span>" }.gsub(/[\r\n]+/,"\n").strip
+      end
+      
+      oHit.highlights(:category).each do |oHL|
+        dbResult.category = oHL.format { |sW| "<span style='color:red'>#{sW.gsub(/;/,"<span style='color:red'>;</span>")}</span>" }
+      end
+    end
+    
+    @dbBlogs=oSearch.results
+    nTotalRecords=oSearch.total
+    $nTotalPages=nTotalRecords%$nNumberOfBlogsEachPage>0 ? nTotalRecords/$nNumberOfBlogsEachPage+1 : nTotalRecords/$nNumberOfBlogsEachPage
+  end
 end
