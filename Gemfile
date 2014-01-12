@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'bcrypt-ruby', '3.0.1'
-gem 'pigrider_layout', :path=>'../pigRiderLayout'
-gem 'pigrider_user', :path=>'../pigRiderUser'
-gem 'sunspot_rails'
+gem 'pigrider_layout', :path=>'../layout'
+gem 'pigrider_user', :path=>'../users'
+gem 'sunspot_rails', '2.0.0'
 
 
 group :development do
-  gem 'sunspot_solr'
+  gem 'sunspot_solr', '2.0.0'
 end
 
 
@@ -25,7 +25,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
+  gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
 end
