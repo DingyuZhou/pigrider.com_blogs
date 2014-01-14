@@ -1,3 +1,5 @@
+##
+# This class is for all blog related operations.
 class BlogsController < ApplicationController
   include BlogsHelper
   include PigriderUser::SessionsHelper
@@ -34,6 +36,9 @@ class BlogsController < ApplicationController
   
 
 private
+
+  ## 
+  # Define the action for a user who hasn't signed in.
   def notSignedIn
     if !userSignedIn
       redirect_to pigrider_user.signInUser_path
@@ -56,6 +61,8 @@ private
   end
   
   
+  ##
+  # Validation for the input.
   def validateBlogInput(dBlog,sAction)  
     # validate the uniqueness of the Blog title
     bValidTitle=true;
@@ -97,6 +104,8 @@ public
   end
 
 
+  ##
+  # Save a new blog into the database.
   def create
     # Use 'transaction' to improve sql operation speed, because this makes all sql operations in one transaction.
     ActiveRecord::Base.transaction do
@@ -140,6 +149,8 @@ public
   end
 
 
+  ##
+  # Update a blog in the database.
   def update
     # Use 'transaction' to improve sql operation speed, because this makes all sql operations in one transaction.
     ActiveRecord::Base.transaction do

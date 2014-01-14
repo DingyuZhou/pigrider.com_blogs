@@ -17,7 +17,7 @@ var TextareaOperation = {
         oHighlightRange.moveEnd("character", iHighlightEnd-iHighlightStart);
         oHighlightRange.select();
       }
-    }
+    };
     
     
     moNew.selectRange = function(sTextareaID) {
@@ -27,7 +27,7 @@ var TextareaOperation = {
         return {
           iSelectStart: oElem.selectionStart,
           iSelectEnd: oElem.selectionEnd
-        }
+        };
       } else if('selection' in document) {
         oElem.focus();
         var sSelect = document.selection.createRange();
@@ -36,11 +36,11 @@ var TextareaOperation = {
         return {
           iSelectStart: sSelect.text.length-iSelectLength,
           iSelectEnd: sSelect.text.length
-        }
+        };
       }
-    }
+    };
     
     
     return moNew;
   }
-}
+};
