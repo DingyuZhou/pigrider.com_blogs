@@ -1,9 +1,4 @@
 <%= javascript_include_tag "common/getUserTimeZone" %>
-<% if cookies[:userTimeZone].nil? %>
-  <script type="text/javascript">
-    window.location.reload();
-  </script>
-<% end %>
 
 <% if userSignedIn %>
   <%= javascript_include_tag "pigrider_layout/jQuery" %>
