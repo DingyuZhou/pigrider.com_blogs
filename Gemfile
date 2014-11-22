@@ -4,11 +4,11 @@ gem 'rails', '3.2.13'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'pigrider_layout', :path=>'../layout'
 gem 'pigrider_user', :path=>'../users'
-gem 'sunspot_rails', '2.0.0'
+gem 'sunspot_rails', '2.1.1'
 
 
 group :development do
-  gem 'sunspot_solr', '2.0.0'
+  gem 'sunspot_solr', '2.1.1'
 end
 
 
