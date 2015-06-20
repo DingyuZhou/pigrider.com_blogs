@@ -15,7 +15,7 @@ end
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2', '0.3.15'
+gem 'mysql2', '0.3.18'
 
 
 # Gems used only for assets and not required

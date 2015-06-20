@@ -40,11 +40,11 @@
 
 .ShareAndSearch {
   position:relative;
-  padding:0 0 40px 0;
+  padding:0 0 20px 0;
   .ShareDiv {
     width:60%;
   }
-  
+
   .SearchDiv {
     position:absolute;
     right:5px;
@@ -73,7 +73,7 @@
 .BlogGlance {
   margin:20px 20px 30px 20px;
   padding:0 0 8px 0;
-  border-bottom:1px solid #b3cee1;  
+  border-bottom:1px solid #b3cee1;
 }
 
 
@@ -92,7 +92,7 @@
   font-size:25px;
   margin:0 0 5px 0;
   overflow:hidden;
-  white-space:nowrap; 
+  white-space:nowrap;
   text-overflow:ellipsis;
   a {
     @include LinkStyleNoUnderline(black,#737373,black);
@@ -143,7 +143,7 @@ ul.PopularBlogs {
     list-style-type:disc;
     list-style-position:inside;
     overflow:hidden;
-    white-space:nowrap; 
+    white-space:nowrap;
     text-overflow:ellipsis;
   }
 }

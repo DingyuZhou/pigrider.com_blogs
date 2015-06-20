@@ -1,5 +1,5 @@
 # MySQL.  Versions 4.1 and 5.0 are recommended.
-# 
+#
 # Install the MYSQL driver
 #   gem install mysql2
 #
@@ -14,16 +14,16 @@ development:
   reconnect: false
   database: pigrider.com_blogs_development
   pool: 5
-  username: 
-  password: 
-  host: pigrider.com
-  
+  username:
+  password:
+  host: localhost
+
 pigrider_user_development:
   adapter: mysql2
   database: pigrider.com_users_development
-  username: 
-  password: 
-  host: pigrider.com
+  username:
+  password:
+  host: localhost
 
 
 # Warning: The database defined as "test" will be erased and
@@ -35,17 +35,17 @@ test:
   reconnect: false
   database: pigrider.com_blogs_test
   pool: 5
-  username: 
-  password: 
-  host: pigrider.com
-  
+  username:
+  password:
+  host: localhost
+
 pigrider_user_test:
   adapter: mysql2
   database: pigrider.com_users_test
-  username: 
-  password: 
-  host: pigrider.com
-  
+  username:
+  password:
+  host: localhost
+
 
 production:
   adapter: mysql2
@@ -53,13 +53,13 @@ production:
   reconnect: false
   database: pigrider.com_blogs_production
   pool: 5
-  username: 
-  password: 
-  host: pigrider.com
+  username:
+  password:
+  host: localhost
 
 pigrider_user_production:
   adapter: mysql2
   database: pigrider.com_users_production
-  username: 
-  password: 
-  host: pigrider.com
+  username:
+  password:
+  host: localhost
