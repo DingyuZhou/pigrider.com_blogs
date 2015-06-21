@@ -8,7 +8,7 @@ gem 'sunspot_rails', '2.1.1'
 
 
 group :development do
-  gem 'sunspot_solr', '2.1.1'
+  gem 'sunspot_solr', '2.1.0'
 end
 
 

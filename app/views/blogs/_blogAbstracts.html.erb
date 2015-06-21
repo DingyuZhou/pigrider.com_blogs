@@ -1,4 +1,3 @@
-<% nUserTimeZoneOffset=cookies[:userTimeZone].to_i %>
 <% if @dbBlogs.length==0 %>
   <br /><br /><br />
   <h3><i>Sorry, no blog was found ......</i></h3>
@@ -6,19 +5,19 @@
   <% @dbBlogs.each do |b| %>
     <div class="BlogGlance">
       <h2 class="BlogTitleAbstract"><%= link_to raw(b.title), b, :title=>b.title %></h2>
-      
-      <p class="BlogDateAuthor">[Author: <%= link_to raw(b.author), blogsByAuthor_path(:byAuthor=>strip_tags(b.author)) %>] &#160; [<%= b.updated_at.in_time_zone(nUserTimeZoneOffset).strftime("%a, %Y-%m-%d, %H:%M") %>] &#160; [<%= b.views %> views]</p>
-      
-      <p>      
+
+      <p class="BlogDateAuthor">[Author: <%= link_to raw(b.author), blogsByAuthor_path(:byAuthor=>strip_tags(b.author)) %>] &#160; [<%= b.updated_at.strftime("%a, %Y-%m-%d, %H:%M") %>] &#160; [<%= b.views %> views]</p>
+
+      <p>
         <% asCategory=parseCategory(b.category) %>
         <% asCategory.each do |sC| %>
           <%= link_to raw(sC), blogsCategory_path(:type=>strip_tags(sC)), {:class=>"BlogCategory"} %>
         <% end %>
       </p>
-      
+
       <div class="BlogAbstract"><pre><%= raw(b.abstract.gsub(/\n/,"</pre><pre>")) %> ... <i><%= link_to "see full article", b, :class=>"SeeFullArticleTag" %></i></pre></div>
-  
-      
+
+
       <% if usernameForSignedInUser==b.author || isAdministrator %>
         <p class="BlogManage">
           <%= link_to "Edit", edit_blog_path(b) %>
